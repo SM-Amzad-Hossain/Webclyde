@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&family=Lato:wght@300;400;700;900&display=swap');
 
 /* ==========================================
    1. VARIABLES & DESIGN SYSTEM
@@ -21,7 +21,7 @@
 
   /* Fonts */
   --font-heading: 'Plus Jakarta Sans', sans-serif;
-  --font-body: 'Inter', sans-serif;
+  --font-body: 'Lato', sans-serif;
 
   /* Layout */
   --container-max-width: 1280px;
@@ -55,6 +55,13 @@ body {
   font-family: var(--font-body);
   line-height: 1.6;
   overflow-x: hidden;
+}
+
+p {
+  font-family: var(--font-body);
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 26px;
 }
 
 /* Scrollbar Style */
@@ -168,8 +175,12 @@ img {
   font-size: 1rem;
 }
 
+h2,
 .section-title {
-  font-size: 3rem;
+  font-family: 'Poppins', sans-serif;
+  font-size: 36px;
+  font-weight: 500;
+  line-height: 46px;
   margin-bottom: 1.5rem;
   max-width: 700px;
   letter-spacing: -0.02em;
@@ -352,10 +363,11 @@ header.scrolled {
 }
 
 .hero h1 {
-  font-size: 4.2rem;
-  font-weight: 800;
-  line-height: 1.1;
-  letter-spacing: -0.03em;
+  font-family: 'Poppins', sans-serif;
+  font-size: 50px;
+  font-weight: 400;
+  line-height: 60px;
+  letter-spacing: -0.01em;
   margin-bottom: 1.8rem;
 }
 
@@ -960,8 +972,37 @@ header.scrolled {
    12. TESTIMONIALS SECTION
    ========================================== */
 .testimonials {
-  background: radial-gradient(circle at 90% 50%, rgba(0, 194, 133, 0.03) 0%, transparent 60%);
+  background-color: #f8fafc;
+  background-image: 
+    radial-gradient(circle at 10% 50%, rgba(3, 176, 128, 0.03) 0%, transparent 60%),
+    radial-gradient(circle at 90% 50%, rgba(250, 204, 21, 0.03) 0%, transparent 60%);
+  color: #0f172a;
   overflow: hidden;
+}
+
+.testimonials .section-title {
+  color: #0f172a;
+}
+
+.testimonials .pill {
+  background: rgba(3, 176, 128, 0.06);
+  border: 1px solid rgba(3, 176, 128, 0.15);
+  color: #0f172a;
+}
+
+.testimonials .pill-icon {
+  color: #f97316; /* Orange sparkles */
+  font-weight: 700;
+}
+
+.testimonials .btn-primary {
+  background-color: #03B080;
+  color: #ffffff;
+}
+
+.testimonials .btn-primary:hover {
+  background-color: #02946b;
+  box-shadow: 0 8px 30px rgba(3, 176, 128, 0.2);
 }
 
 .testimonials-header {
@@ -976,10 +1017,11 @@ header.scrolled {
 }
 
 .testimonials-track-container {
-  overflow: hidden;
   width: 100%;
+  overflow: hidden;
   position: relative;
   cursor: grab;
+  padding: 2.5rem 0;
 }
 
 .testimonials-track-container:active {
@@ -991,12 +1033,14 @@ header.scrolled {
   gap: 2rem;
   transition: transform 0.1s ease;
   width: max-content;
+  padding-left: max(2rem, calc((100vw - var(--container-max-width)) / 2 + 2rem));
+  padding-right: 2rem;
 }
 
 .testimonial-card {
   width: 380px;
-  background: var(--card-bg-light);
-  border: 1px solid var(--card-border-light);
+  background: #ffffff;
+  border: none !important;
   border-radius: var(--border-radius-md);
   padding: 2.5rem;
   transition: var(--transition-normal);
@@ -1004,46 +1048,70 @@ header.scrolled {
   flex-direction: column;
   gap: 1.5rem;
   user-select: none;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.04);
+  position: relative;
+}
+
+.testimonial-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  padding: 1px;
+  border-radius: var(--border-radius-md);
+  background: linear-gradient(90deg, #ADAF31 0%, #03B080 53%, #B0F7B0 100%);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
 }
 
 .testimonial-card:hover {
-  border-color: rgba(0, 194, 133, 0.2);
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
-  transform: translateY(-4px);
+  box-shadow: 0 15px 35px rgba(3, 176, 128, 0.08);
+}
+
+.testimonial-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
 }
 
 .testimonial-profile {
   display: flex;
   align-items: center;
-  gap: 1.2rem;
+  gap: 1rem;
 }
 
 .testimonial-avatar {
   width: 50px;
   height: 50px;
   border-radius: 50%;
-  border: 2px solid rgba(0, 194, 133, 0.2);
+  border: 1px solid #e2e8f0;
   object-fit: cover;
 }
 
 .testimonial-info h4 {
   font-size: 1.1rem;
-  margin-bottom: 0.2rem;
+  margin-bottom: 0.1rem;
+  color: #0f172a;
+  font-weight: 700;
 }
 
 .testimonial-info p {
   font-size: 0.85rem;
-  color: var(--text-dim);
+  color: #03B080;
+  font-weight: 500;
 }
 
 .stars-rating {
   display: flex;
   gap: 0.2rem;
-  color: var(--accent);
+  color: #ffd13b;
 }
 
 .testimonial-text {
-  color: var(--text-muted);
+  color: #475569;
   font-size: 0.95rem;
   line-height: 1.6;
 }
@@ -1086,9 +1154,11 @@ header.scrolled {
 }
 
 .cta-grid h2 {
-  font-size: 3rem;
+  font-family: 'Poppins', sans-serif;
+  font-size: 36px;
+  font-weight: 500;
+  line-height: 46px;
   margin-bottom: 1.5rem;
-  line-height: 1.15;
 }
 
 .cta-grid h2 span {
@@ -1351,6 +1421,7 @@ header.scrolled {
 .contact-label {
   background: linear-gradient(90deg, #03B080 0%, #57EA57 100%);
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
   display: inline-block;
   font-weight: 700;
@@ -1715,6 +1786,7 @@ a.contact-value:hover {
 .text-gradinat {
   background: linear-gradient(90deg, #03B080 0%, #57EA57 100%);
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 

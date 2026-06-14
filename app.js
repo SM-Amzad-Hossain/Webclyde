@@ -89,46 +89,98 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // ==========================================
-  // 4. TESTIMONIALS DRAG TO SCROLL
+  // 4. TESTIMONIALS DRAG TO SCROLL & AUTOPLAY (INFINITE LOOP)
   // ==========================================
   const trackContainer = document.querySelector('.testimonials-track-container');
   const track = document.querySelector('.testimonials-track');
   
   if (trackContainer && track) {
+    // Clone cards to create 4 identical sets (original + 3 clones)
+    const originalCards = Array.from(track.children);
+    for (let i = 0; i < 3; i++) {
+      originalCards.forEach(card => {
+        const clone = card.cloneNode(true);
+        track.appendChild(clone);
+      });
+    }
+
     let isDown = false;
-    let startX;
-    let scrollLeft;
-    
+    let isPaused = false;
+    let lastX;
+    let autoplaySpeed = 0.6; // Auto-scroll speed
+    let autoplayInterval;
+
+    // Helper to calculate a single set width
+    const getSingleSetWidth = () => {
+      return track.scrollWidth / 4;
+    };
+
+    // Set scroll position to the start of the second set
+    const initScrollPosition = () => {
+      const singleSetWidth = getSingleSetWidth();
+      if (singleSetWidth > 0) {
+        trackContainer.scrollLeft = singleSetWidth;
+      }
+    };
+
+    // Initialize position after load or a short delay
+    window.addEventListener('load', initScrollPosition);
+    setTimeout(initScrollPosition, 100);
+
+    // Infinite wrapping logic on scroll (keep scroll position within middle sets)
+    trackContainer.addEventListener('scroll', () => {
+      const singleSetWidth = getSingleSetWidth();
+      if (singleSetWidth <= 0) return;
+
+      if (trackContainer.scrollLeft >= singleSetWidth * 3) {
+        trackContainer.scrollLeft -= singleSetWidth;
+      } else if (trackContainer.scrollLeft <= singleSetWidth) {
+        trackContainer.scrollLeft += singleSetWidth;
+      }
+    });
+
+    // Autoplay scroll animation loop
+    const scrollStep = () => {
+      if (!isDown && !isPaused) {
+        trackContainer.scrollLeft += autoplaySpeed;
+      }
+      autoplayInterval = requestAnimationFrame(scrollStep);
+    };
+    autoplayInterval = requestAnimationFrame(scrollStep);
+
+    // Pause on hover
+    trackContainer.addEventListener('mouseenter', () => {
+      isPaused = true;
+    });
+    trackContainer.addEventListener('mouseleave', () => {
+      isPaused = false;
+      isDown = false;
+    });
+
+    // Mouse Drag Interactions
     trackContainer.addEventListener('mousedown', (e) => {
       isDown = true;
       trackContainer.classList.add('active');
-      startX = e.pageX - trackContainer.offsetLeft;
-      scrollLeft = trackContainer.scrollLeft;
+      lastX = e.pageX;
     });
     
-    trackContainer.addEventListener('mouseleave', () => {
-      isDown = false;
-      trackContainer.classList.remove('active');
+    trackContainer.addEventListener('mousemove', (e) => {
+      if (!isDown) return;
+      e.preventDefault();
+      const deltaX = e.pageX - lastX;
+      lastX = e.pageX;
+      trackContainer.scrollLeft -= deltaX * 1.2;
     });
     
     trackContainer.addEventListener('mouseup', () => {
       isDown = false;
       trackContainer.classList.remove('active');
     });
-    
-    trackContainer.addEventListener('mousemove', (e) => {
-      if (!isDown) return;
-      e.preventDefault();
-      const x = e.pageX - trackContainer.offsetLeft;
-      const walk = (x - startX) * 1.5; // scroll speed
-      trackContainer.scrollLeft = scrollLeft - walk;
-    });
-    
-    // Add touch support
+
+    // Touch Swipe Interactions
     trackContainer.addEventListener('touchstart', (e) => {
       isDown = true;
-      startX = e.touches[0].pageX - trackContainer.offsetLeft;
-      scrollLeft = trackContainer.scrollLeft;
+      lastX = e.touches[0].pageX;
     });
     
     trackContainer.addEventListener('touchend', () => {
@@ -137,9 +189,9 @@ document.addEventListener('DOMContentLoaded', () => {
     
     trackContainer.addEventListener('touchmove', (e) => {
       if (!isDown) return;
-      const x = e.touches[0].pageX - trackContainer.offsetLeft;
-      const walk = (x - startX) * 1.5;
-      trackContainer.scrollLeft = scrollLeft - walk;
+      const deltaX = e.touches[0].pageX - lastX;
+      lastX = e.touches[0].pageX;
+      trackContainer.scrollLeft -= deltaX * 1.2;
     });
   }
 
