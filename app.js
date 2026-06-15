@@ -47,44 +47,23 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // ==========================================
-  // 3. PROCESS ACCORDION & IMAGE CHANGE
+  // 3. PROCESS STEP ROWS INTERACTIONS
   // ==========================================
-  const accordionItems = document.querySelectorAll('.accordion-item');
-  const processImg = document.getElementById('process-display-img');
+  const stepRows = document.querySelectorAll('.step-row');
   
-  // Mapping steps to different visual images in Asset/images/
-  const stepImages = {
-    1: 'Asset/images/Peekabo.jpg',
-    2: 'Asset/images/Rasa.png',
-    3: 'Asset/images/laptop-mockup 1.png',
-    4: 'Asset/images/tablet mockup.png'
-  };
-
-  accordionItems.forEach((item, index) => {
-    const header = item.querySelector('.accordion-header');
+  stepRows.forEach(row => {
+    // Hover event to switch active step row
+    row.addEventListener('mouseenter', () => {
+      if (row.classList.contains('active')) return;
+      stepRows.forEach(r => r.classList.remove('active'));
+      row.classList.add('active');
+    });
     
-    header.addEventListener('click', () => {
-      // If already active, do nothing
-      if (item.classList.contains('active')) return;
-      
-      // Remove active from others
-      accordionItems.forEach(i => i.classList.remove('active'));
-      
-      // Make this active
-      item.classList.add('active');
-      
-      // Smooth transition for image
-      const stepNum = index + 1;
-      if (processImg && stepImages[stepNum]) {
-        processImg.style.opacity = '0';
-        processImg.style.transform = 'scale(0.98)';
-        
-        setTimeout(() => {
-          processImg.src = stepImages[stepNum];
-          processImg.style.opacity = '1';
-          processImg.style.transform = 'scale(1)';
-        }, 300);
-      }
+    // Click event for accessibility/mobile devices
+    row.addEventListener('click', () => {
+      if (row.classList.contains('active')) return;
+      stepRows.forEach(r => r.classList.remove('active'));
+      row.classList.add('active');
     });
   });
 
@@ -132,9 +111,9 @@ document.addEventListener('DOMContentLoaded', () => {
       const singleSetWidth = getSingleSetWidth();
       if (singleSetWidth <= 0) return;
 
-      if (trackContainer.scrollLeft >= singleSetWidth * 3) {
+      if (trackContainer.scrollLeft >= singleSetWidth * 2) {
         trackContainer.scrollLeft -= singleSetWidth;
-      } else if (trackContainer.scrollLeft <= singleSetWidth) {
+      } else if (trackContainer.scrollLeft <= 0) {
         trackContainer.scrollLeft += singleSetWidth;
       }
     });
@@ -247,4 +226,112 @@ document.addEventListener('DOMContentLoaded', () => {
       }, 1500);
     });
   }
+
+  // ==========================================
+  // 6. PORTFOLIO CAROUSEL DOUBLE AUTO-SCROLL (LEFT & RIGHT)
+  // ==========================================
+  const leftContainer = document.querySelector('.track-left-container');
+  const leftTrack = document.querySelector('.track-left');
+  const rightContainer = document.querySelector('.track-right-container');
+  const rightTrack = document.querySelector('.track-right');
+  
+  const setupInfiniteCarousel = (container, track, direction) => {
+    if (!container || !track) return;
+    
+    // Clone cards to create 4 sets (original + 3 clones)
+    const originalCards = Array.from(track.children);
+    for (let i = 0; i < 3; i++) {
+      originalCards.forEach(card => {
+        const clone = card.cloneNode(true);
+        track.appendChild(clone);
+      });
+    }
+    
+    const getSingleSetWidth = () => {
+      return track.scrollWidth / 4;
+    };
+    
+    const initScroll = () => {
+      const singleSetWidth = getSingleSetWidth();
+      if (singleSetWidth > 0) {
+        if (direction === 'left') {
+          container.scrollLeft = singleSetWidth;
+        } else {
+          container.scrollLeft = singleSetWidth * 2;
+        }
+      }
+    };
+    
+    window.addEventListener('load', initScroll);
+    setTimeout(initScroll, 100);
+    
+    // Wrapping logic on manual or auto scroll
+    container.addEventListener('scroll', () => {
+      const singleSetWidth = getSingleSetWidth();
+      if (singleSetWidth <= 0) return;
+      
+      if (direction === 'left') {
+        if (container.scrollLeft >= singleSetWidth * 2) {
+          container.scrollLeft -= singleSetWidth;
+        } else if (container.scrollLeft <= 0) {
+          container.scrollLeft += singleSetWidth;
+        }
+      } else {
+        if (container.scrollLeft <= singleSetWidth) {
+          container.scrollLeft += singleSetWidth;
+        } else if (container.scrollLeft >= singleSetWidth * 3) {
+          container.scrollLeft -= singleSetWidth;
+        }
+      }
+    });
+    
+    let isDown = false;
+    let isPaused = false;
+    let lastX;
+    let speed = 0.6; // Scroll speed
+    
+    const scrollStep = () => {
+      if (!isDown && !isPaused) {
+        if (direction === 'left') {
+          container.scrollLeft += speed;
+        } else {
+          container.scrollLeft -= speed;
+        }
+      }
+      requestAnimationFrame(scrollStep);
+    };
+    requestAnimationFrame(scrollStep);
+    
+    // Pause on hover
+    container.addEventListener('mouseenter', () => { isPaused = true; });
+    container.addEventListener('mouseleave', () => { isPaused = false; isDown = false; });
+    
+    // Drag/Touch Interactions
+    container.addEventListener('mousedown', (e) => {
+      isDown = true;
+      lastX = e.pageX;
+    });
+    container.addEventListener('mousemove', (e) => {
+      if (!isDown) return;
+      const deltaX = e.pageX - lastX;
+      lastX = e.pageX;
+      container.scrollLeft -= deltaX * 1.2;
+    });
+    container.addEventListener('mouseup', () => { isDown = false; });
+    
+    container.addEventListener('touchstart', (e) => {
+      isDown = true;
+      lastX = e.touches[0].pageX;
+    });
+    container.addEventListener('touchend', () => { isDown = false; });
+    container.addEventListener('touchmove', (e) => {
+      if (!isDown) return;
+      const deltaX = e.touches[0].pageX - lastX;
+      lastX = e.touches[0].pageX;
+      container.scrollLeft -= deltaX * 1.2;
+    });
+  };
+  
+  setupInfiniteCarousel(leftContainer, leftTrack, 'left');
+  setupInfiniteCarousel(rightContainer, rightTrack, 'right');
 });
