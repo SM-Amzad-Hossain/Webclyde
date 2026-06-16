@@ -18,31 +18,20 @@ document.addEventListener('DOMContentLoaded', () => {
   // ==========================================
   const navToggle = document.querySelector('.nav-toggle');
   const navLinks = document.querySelector('.nav-links');
-  
+
   if (navToggle && navLinks) {
-    // Create mobile menu container if needed, or toggle class
     navToggle.addEventListener('click', () => {
       navLinks.classList.toggle('active');
       const isExpanded = navLinks.classList.contains('active');
       navToggle.setAttribute('aria-expanded', isExpanded);
-      
-      // Dynamic mobile navigation menu transitions
-      if (isExpanded) {
-        navLinks.style.display = 'flex';
-        navLinks.style.flexDirection = 'column';
-        navLinks.style.position = 'absolute';
-        navLinks.style.top = '100%';
-        navLinks.style.left = '0';
-        navLinks.style.width = '100%';
-        navLinks.style.background = 'rgba(3, 22, 18, 0.95)';
-        navLinks.style.backdropFilter = 'blur(10px)';
-        navLinks.style.padding = '2rem';
-        navLinks.style.borderBottom = '1px solid rgba(0, 194, 133, 0.1)';
-        navLinks.style.gap = '1.5rem';
-        navLinks.style.zIndex = '99';
-      } else {
-        navLinks.style.display = '';
-      }
+    });
+
+    // Close mobile menu when a nav link is clicked
+    navLinks.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        navLinks.classList.remove('active');
+        navToggle.setAttribute('aria-expanded', 'false');
+      });
     });
   }
 
@@ -50,7 +39,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // 3. PROCESS STEP ROWS INTERACTIONS
   // ==========================================
   const stepRows = document.querySelectorAll('.step-row');
-  
+
   stepRows.forEach(row => {
     // Hover event to switch active step row
     row.addEventListener('mouseenter', () => {
@@ -58,7 +47,7 @@ document.addEventListener('DOMContentLoaded', () => {
       stepRows.forEach(r => r.classList.remove('active'));
       row.classList.add('active');
     });
-    
+
     // Click event for accessibility/mobile devices
     row.addEventListener('click', () => {
       if (row.classList.contains('active')) return;
@@ -72,7 +61,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // ==========================================
   const trackContainer = document.querySelector('.testimonials-track-container');
   const track = document.querySelector('.testimonials-track');
-  
+
   if (trackContainer && track) {
     // Clone cards to create 4 identical sets (original + 3 clones)
     const originalCards = Array.from(track.children);
@@ -142,7 +131,7 @@ document.addEventListener('DOMContentLoaded', () => {
       trackContainer.classList.add('active');
       lastX = e.pageX;
     });
-    
+
     trackContainer.addEventListener('mousemove', (e) => {
       if (!isDown) return;
       e.preventDefault();
@@ -150,7 +139,7 @@ document.addEventListener('DOMContentLoaded', () => {
       lastX = e.pageX;
       trackContainer.scrollLeft -= deltaX * 1.2;
     });
-    
+
     trackContainer.addEventListener('mouseup', () => {
       isDown = false;
       trackContainer.classList.remove('active');
@@ -161,11 +150,11 @@ document.addEventListener('DOMContentLoaded', () => {
       isDown = true;
       lastX = e.touches[0].pageX;
     });
-    
+
     trackContainer.addEventListener('touchend', () => {
       isDown = false;
     });
-    
+
     trackContainer.addEventListener('touchmove', (e) => {
       if (!isDown) return;
       const deltaX = e.touches[0].pageX - lastX;
@@ -179,31 +168,31 @@ document.addEventListener('DOMContentLoaded', () => {
   // ==========================================
   const contactForm = document.getElementById('consultation-form');
   const formCard = document.querySelector('.contact-form-card');
-  
+
   if (contactForm && formCard) {
     contactForm.addEventListener('submit', (e) => {
       e.preventDefault();
-      
+
       // Simple validation checking
       const name = document.getElementById('full-name').value.trim();
       const email = document.getElementById('email-address').value.trim();
-      
+
       if (!name || !email) {
         alert('Please fill out the required fields.');
         return;
       }
-      
+
       // Show smooth sending state
       const submitBtn = contactForm.querySelector('button[type="submit"]');
       const originalText = submitBtn.innerHTML;
       submitBtn.disabled = true;
       submitBtn.innerHTML = 'Sending message...';
-      
+
       setTimeout(() => {
         // Form success animation replacing content
         formCard.style.opacity = '0';
         formCard.style.transform = 'scale(0.95)';
-        
+
         setTimeout(() => {
           formCard.innerHTML = `
             <div style="text-align: center; padding: 3rem 1rem; display: flex; flex-direction: column; align-items: center; gap: 1.5rem;">
@@ -222,7 +211,7 @@ document.addEventListener('DOMContentLoaded', () => {
           formCard.style.opacity = '1';
           formCard.style.transform = 'scale(1)';
         }, 300);
-        
+
       }, 1500);
     });
   }
@@ -234,10 +223,10 @@ document.addEventListener('DOMContentLoaded', () => {
   const leftTrack = document.querySelector('.track-left');
   const rightContainer = document.querySelector('.track-right-container');
   const rightTrack = document.querySelector('.track-right');
-  
+
   const setupInfiniteCarousel = (container, track, direction) => {
     if (!container || !track) return;
-    
+
     // Clone cards to create 4 sets (original + 3 clones)
     const originalCards = Array.from(track.children);
     for (let i = 0; i < 3; i++) {
@@ -246,11 +235,11 @@ document.addEventListener('DOMContentLoaded', () => {
         track.appendChild(clone);
       });
     }
-    
+
     const getSingleSetWidth = () => {
       return track.scrollWidth / 4;
     };
-    
+
     const initScroll = () => {
       const singleSetWidth = getSingleSetWidth();
       if (singleSetWidth > 0) {
@@ -261,15 +250,15 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       }
     };
-    
+
     window.addEventListener('load', initScroll);
     setTimeout(initScroll, 100);
-    
+
     // Wrapping logic on manual or auto scroll
     container.addEventListener('scroll', () => {
       const singleSetWidth = getSingleSetWidth();
       if (singleSetWidth <= 0) return;
-      
+
       if (direction === 'left') {
         if (container.scrollLeft >= singleSetWidth * 2) {
           container.scrollLeft -= singleSetWidth;
@@ -284,12 +273,12 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       }
     });
-    
+
     let isDown = false;
     let isPaused = false;
     let lastX;
     let speed = 0.6; // Scroll speed
-    
+
     const scrollStep = () => {
       if (!isDown && !isPaused) {
         if (direction === 'left') {
@@ -301,11 +290,11 @@ document.addEventListener('DOMContentLoaded', () => {
       requestAnimationFrame(scrollStep);
     };
     requestAnimationFrame(scrollStep);
-    
+
     // Pause on hover
     container.addEventListener('mouseenter', () => { isPaused = true; });
     container.addEventListener('mouseleave', () => { isPaused = false; isDown = false; });
-    
+
     // Drag/Touch Interactions
     container.addEventListener('mousedown', (e) => {
       isDown = true;
@@ -318,7 +307,7 @@ document.addEventListener('DOMContentLoaded', () => {
       container.scrollLeft -= deltaX * 1.2;
     });
     container.addEventListener('mouseup', () => { isDown = false; });
-    
+
     container.addEventListener('touchstart', (e) => {
       isDown = true;
       lastX = e.touches[0].pageX;
@@ -331,7 +320,41 @@ document.addEventListener('DOMContentLoaded', () => {
       container.scrollLeft -= deltaX * 1.2;
     });
   };
-  
+
   setupInfiniteCarousel(leftContainer, leftTrack, 'left');
   setupInfiniteCarousel(rightContainer, rightTrack, 'right');
+
+  // ==========================================
+  // 7. HERO MOCKUPS PARALLAX SCROLL EFFECT (SMOOTH LERP)
+  // ==========================================
+  const mockupLeft = document.querySelector('.hero-mockup-left');
+  const mockupRight = document.querySelector('.hero-mockup-right');
+
+  if (mockupLeft || mockupRight) {
+    let currentY = 0;
+    let targetY = 0;
+    const ease = 0.08; // Butter smooth damping factor
+
+    window.addEventListener('scroll', () => {
+      if (window.innerWidth > 1200) {
+        targetY = window.scrollY;
+      }
+    }, { passive: true });
+
+    const smoothParallax = () => {
+      if (window.innerWidth > 1200) {
+        currentY += (targetY - currentY) * ease;
+
+        if (mockupLeft) {
+          mockupLeft.style.transform = `translateY(calc(-50% + ${currentY * 0.25}px))`;
+        }
+        if (mockupRight) {
+          mockupRight.style.transform = `translateY(calc(-50% + ${currentY * 0.25}px))`;
+        }
+      }
+      requestAnimationFrame(smoothParallax);
+    };
+
+    smoothParallax();
+  }
 });
