@@ -1,39 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-  // ==========================================
-  // 1. HEADER SCROLL EFFECT
-  // ==========================================
-  const header = document.querySelector('header');
-  const handleScroll = () => {
-    if (window.scrollY > 50) {
-      header.classList.add('scrolled');
-    } else {
-      header.classList.remove('scrolled');
-    }
-  };
-  window.addEventListener('scroll', handleScroll);
-  handleScroll(); // Initial check
 
-  // ==========================================
-  // 2. MOBILE NAV DRAWER
-  // ==========================================
-  const navToggle = document.querySelector('.nav-toggle');
-  const navLinks = document.querySelector('.nav-links');
-
-  if (navToggle && navLinks) {
-    navToggle.addEventListener('click', () => {
-      navLinks.classList.toggle('active');
-      const isExpanded = navLinks.classList.contains('active');
-      navToggle.setAttribute('aria-expanded', isExpanded);
-    });
-
-    // Close mobile menu when a nav link is clicked
-    navLinks.querySelectorAll('a').forEach(link => {
-      link.addEventListener('click', () => {
-        navLinks.classList.remove('active');
-        navToggle.setAttribute('aria-expanded', 'false');
-      });
-    });
-  }
 
   // ==========================================
   // 3. PROCESS STEP ROWS INTERACTIONS
@@ -166,55 +132,63 @@ document.addEventListener('DOMContentLoaded', () => {
   // ==========================================
   // 5. CONTACT FORM INTERACTIVE SUCCESS
   // ==========================================
-  const contactForm = document.getElementById('consultation-form');
-  const formCard = document.querySelector('.contact-form-card');
+  window.initContactForm = function() {
+    const contactForm = document.getElementById('consultation-form');
+    const formCard = document.querySelector('.contact-form-card');
 
-  if (contactForm && formCard) {
-    contactForm.addEventListener('submit', (e) => {
-      e.preventDefault();
+    if (contactForm && formCard) {
+      if (contactForm.dataset.initialized) return;
+      contactForm.dataset.initialized = 'true';
 
-      // Simple validation checking
-      const name = document.getElementById('full-name').value.trim();
-      const email = document.getElementById('email-address').value.trim();
+      contactForm.addEventListener('submit', (e) => {
+        e.preventDefault();
 
-      if (!name || !email) {
-        alert('Please fill out the required fields.');
-        return;
-      }
+        // Simple validation checking
+        const name = document.getElementById('full-name').value.trim();
+        const email = document.getElementById('email-address').value.trim();
 
-      // Show smooth sending state
-      const submitBtn = contactForm.querySelector('button[type="submit"]');
-      const originalText = submitBtn.innerHTML;
-      submitBtn.disabled = true;
-      submitBtn.innerHTML = 'Sending message...';
+        if (!name || !email) {
+          alert('Please fill out the required fields.');
+          return;
+        }
 
-      setTimeout(() => {
-        // Form success animation replacing content
-        formCard.style.opacity = '0';
-        formCard.style.transform = 'scale(0.95)';
+        // Show smooth sending state
+        const submitBtn = contactForm.querySelector('button[type="submit"]');
+        const originalText = submitBtn.innerHTML;
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = 'Sending message...';
 
         setTimeout(() => {
-          formCard.innerHTML = `
-            <div style="text-align: center; padding: 3rem 1rem; display: flex; flex-direction: column; align-items: center; gap: 1.5rem;">
-              <div style="width: 70px; height: 70px; border-radius: 50%; background: rgba(0, 194, 133, 0.1); border: 2px solid var(--primary); display: flex; align-items: center; justify-content: center; color: var(--primary); font-size: 2.2rem; margin-bottom: 0.5rem; animation: pulse 2s infinite;">
-                ✓
-              </div>
-              <h3 style="font-size: 1.8rem; font-weight: 700; color: var(--text-light);">Message Sent!</h3>
-              <p style="color: var(--text-muted); font-size: 1.05rem; line-height: 1.6; max-width: 320px;">
-                Thank you, <strong>${name}</strong>. We have received your message and will get back to you within 24 hours.
-              </p>
-              <button class="btn btn-primary" onclick="window.location.reload()" style="margin-top: 1rem;">
-                Send Another Message
-              </button>
-            </div>
-          `;
-          formCard.style.opacity = '1';
-          formCard.style.transform = 'scale(1)';
-        }, 300);
+          // Form success animation replacing content
+          formCard.style.opacity = '0';
+          formCard.style.transform = 'scale(0.95)';
 
-      }, 1500);
-    });
-  }
+          setTimeout(() => {
+            formCard.innerHTML = `
+              <div style="text-align: center; padding: 3rem 1rem; display: flex; flex-direction: column; align-items: center; gap: 1.5rem;">
+                <div style="width: 70px; height: 70px; border-radius: 50%; background: rgba(0, 194, 133, 0.1); border: 2px solid var(--primary); display: flex; align-items: center; justify-content: center; color: var(--primary); font-size: 2.2rem; margin-bottom: 0.5rem; animation: pulse 2s infinite;">
+                  ✓
+                </div>
+                <h3 style="font-size: 1.8rem; font-weight: 700; color: var(--text-light);">Message Sent!</h3>
+                <p style="color: var(--text-muted); font-size: 1.05rem; line-height: 1.6; max-width: 320px;">
+                  Thank you, <strong>${name}</strong>. We have received your message and will get back to you within 24 hours.
+                </p>
+                <button class="btn btn-primary" onclick="window.location.reload()" style="margin-top: 1rem;">
+                  Send Another Message
+                </button>
+              </div>
+            `;
+            formCard.style.opacity = '1';
+            formCard.style.transform = 'scale(1)';
+          }, 300);
+
+        }, 1500);
+      });
+    }
+  };
+
+  // Run on page load if the form is statically present
+  window.initContactForm();
 
   // ==========================================
   // 6. PORTFOLIO CAROUSEL DOUBLE AUTO-SCROLL (LEFT & RIGHT)
