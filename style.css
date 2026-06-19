@@ -189,6 +189,9 @@ img {
   justify-content: center;
   font-size: 1rem;
 }
+.text-center{
+  text-align: center;
+}
 
 h2,
 .section-title {
@@ -2011,8 +2014,8 @@ h2,
   display: flex;
   align-items: center;
   justify-content: center;
-  background: radial-gradient(circle at 50% 30%, rgba(0, 194, 133, 0.08) 0%, transparent 70%), 
-              url('Asset/images/Inner%20page%20Hero%20Banner.jpg') no-repeat center/cover;
+  background: radial-gradient(circle at 50% 30%, rgba(0, 194, 133, 0.08) 0%, transparent 70%),
+    url('Asset/images/Inner%20page%20Hero%20Banner.jpg') no-repeat center/cover;
   position: relative;
   text-align: center;
 }
@@ -2020,7 +2023,7 @@ h2,
 .contact-grid-section {
   background-color: #ffffff;
   background-image: radial-gradient(circle at 0% 0%, rgba(3, 152, 85, 0.03) 0%, transparent 50%),
-                    radial-gradient(circle at 100% 100%, rgba(255, 209, 59, 0.03) 0%, transparent 50%);
+    radial-gradient(circle at 100% 100%, rgba(255, 209, 59, 0.03) 0%, transparent 50%);
   color: #0f172a;
 }
 
@@ -2109,6 +2112,22 @@ h2,
   position: relative;
 }
 
+.schedule-btn-wrap::before {
+  content: '';
+  position: absolute;
+  right: -90px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 100px;
+  height: 100px;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  transition: transform 0.3s ease;
+  background-image: url('Asset/images/CEO.png');
+  z-index: 1;
+}
+
 .schedule-btn {
   padding: 1rem 2.8rem 1rem 2rem !important;
   background: var(--primary);
@@ -2119,13 +2138,11 @@ h2,
   gap: 0.8rem;
   border-radius: 100px;
   transition: var(--transition-normal);
-  z-index: 1;
 }
 
 .schedule-btn:hover {
   background: #027a43;
   box-shadow: 0 8px 25px rgba(3, 152, 85, 0.25);
-  transform: translateY(-2px);
 }
 
 .schedule-btn-wrap .avatar-group {
@@ -2206,7 +2223,6 @@ h2,
 /* What Happens Next Section */
 .next-steps-section {
   background-color: #f8fafc;
-  border-top: 1px solid #e2e8f0;
   color: #0f172a;
 }
 
@@ -2223,8 +2239,8 @@ h2,
   border-radius: var(--border-radius-md);
   padding: 3rem 2rem;
   transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
-              box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1),
-              border-color 0.4s ease;
+    box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 0.4s ease;
   text-align: left;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.02);
 }
@@ -2276,10 +2292,12 @@ h2,
     grid-template-columns: 1fr;
     gap: 4rem;
   }
+
   .next-steps-grid {
     grid-template-columns: 1fr;
     gap: 2rem;
   }
+
   .contact-left-info h2 {
     font-size: 32px;
     line-height: 40px;
@@ -2292,14 +2310,17 @@ h2,
     align-items: flex-start;
     gap: 1.5rem;
   }
+
   .schedule-btn-wrap {
     flex-direction: column;
     align-items: flex-start;
     gap: 1rem;
   }
+
   .schedule-left {
     width: 100%;
   }
+
   .avatar-group {
     margin-left: 10px;
   }
