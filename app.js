@@ -516,4 +516,25 @@ document.addEventListener('DOMContentLoaded', () => {
 
     smoothParallax();
   }
+
+  // ==========================================
+  // 8. FAQ ACCORDION INTERACTION
+  // ==========================================
+  const faqItems = document.querySelectorAll('.faq-item');
+  faqItems.forEach(item => {
+    const question = item.querySelector('.faq-question');
+    if (question) {
+      question.addEventListener('click', () => {
+        const isActive = item.classList.contains('active');
+        
+        // Remove active class from all items
+        faqItems.forEach(i => i.classList.remove('active'));
+        
+        // Toggle active class on current item
+        if (!isActive) {
+          item.classList.add('active');
+        }
+      });
+    }
+  });
 });
