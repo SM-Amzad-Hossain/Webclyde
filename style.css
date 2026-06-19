@@ -189,7 +189,8 @@ img {
   justify-content: center;
   font-size: 1rem;
 }
-.text-center{
+
+.text-center {
   text-align: center;
 }
 
@@ -881,6 +882,7 @@ h2,
   overflow: hidden;
   position: relative;
   cursor: grab;
+  overflow-anchor: none;
 }
 
 .portfolio-carousel-container:active {
@@ -2323,5 +2325,522 @@ h2,
 
   .avatar-group {
     margin-left: 10px;
+  }
+}
+
+/* ==========================================
+   19. ABOUT US PAGE STYLES
+   ========================================== */
+
+/* About Hero */
+.about-hero {
+  padding: 12rem 0 6rem 0;
+  text-align: center;
+  background: radial-gradient(circle at 50% 30%, rgba(0, 194, 133, 0.08) 0%, transparent 70%),
+    url('Asset/images/Inner%20page%20Hero%20Banner.jpg') no-repeat center/cover;
+  position: relative;
+  overflow: hidden;
+}
+
+.about-hero h1 {
+  font-family: 'Poppins', sans-serif;
+  font-size: 50px;
+  font-weight: 400;
+  line-height: 60px;
+  letter-spacing: -0.01em;
+  margin-bottom: 3.5rem;
+}
+
+/* About Gallery Carousel Section */
+.about-gallery-carousel-wrapper {
+  background-color: #ffffff;
+  padding: 6rem 0;
+  position: relative;
+  overflow: hidden;
+  z-index: 5;
+}
+
+.about-gallery-carousel-wrapper .portfolio-carousel-container {
+  padding: 20px 0;
+  height: 420px;
+}
+
+.about-gallery-carousel-wrapper .portfolio-carousel-track {
+  align-items: center;
+  height: 100%;
+}
+
+.about-gallery-carousel-wrapper .portfolio-carousel-card {
+  width: 240px;
+  border-radius: 16px;
+  overflow: hidden;
+  transition: height 0.6s cubic-bezier(0.4, 0, 0.2, 1), transform 0.6s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.6s ease-in-out;
+  position: relative;
+}
+
+.about-gallery-carousel-wrapper .portfolio-carousel-card.odd {
+  height: 340px;
+}
+
+.about-gallery-carousel-wrapper .portfolio-carousel-card.even {
+  height: 275px;
+}
+
+.about-gallery-carousel-wrapper .portfolio-carousel-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 45px rgba(0, 194, 133, 0.2);
+}
+
+/* Even card active (normal scroll state): even cards grow tall (340px), odd cards shrink (275px), active card is tallest */
+.about-carousel-container.even-active .portfolio-carousel-card.even {
+  height: 340px;
+}
+
+.about-carousel-container.even-active .portfolio-carousel-card.odd {
+  height: 275px;
+}
+
+.about-carousel-container.even-active .portfolio-carousel-card.active-slide {
+  height: 355px;
+}
+
+/* Odd card active (normal scroll state): odd cards grow tall (340px), even cards shrink (275px), active card is tallest */
+.about-carousel-container.odd-active .portfolio-carousel-card.odd {
+  height: 340px;
+}
+
+.about-carousel-container.odd-active .portfolio-carousel-card.even {
+  height: 275px;
+}
+
+.about-carousel-container.odd-active .portfolio-carousel-card.active-slide {
+  height: 355px;
+}
+
+.about-gallery-carousel-wrapper .portfolio-carousel-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  display: block;
+}
+
+.about-gallery-carousel-wrapper .portfolio-carousel-card:hover img {
+  transform: scale(1.06);
+}
+
+/* Light Theme Content Wrapper */
+.about-light-theme {
+  background-color: #ffffff;
+  color: #475569;
+  position: relative;
+  z-index: 10;
+  overflow: hidden;
+}
+
+/* Radial Glow Blobs for Light Section */
+.about-light-glow {
+  position: absolute;
+  width: 600px;
+  height: 600px;
+  border-radius: 50%;
+  filter: blur(140px);
+  opacity: 0.3;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.about-light-glow-1 {
+  background: radial-gradient(circle, rgba(0, 194, 133, 0.18) 0%, transparent 70%);
+  top: 5%;
+  left: -10%;
+}
+
+.about-light-glow-2 {
+  background: radial-gradient(circle, rgba(255, 209, 59, 0.15) 0%, transparent 70%);
+  top: 35%;
+  right: -10%;
+}
+
+.about-light-glow-3 {
+  background: radial-gradient(circle, rgba(0, 194, 133, 0.12) 0%, transparent 70%);
+  bottom: 15%;
+  left: 15%;
+}
+
+.about-light-theme h2,
+.about-light-theme .section-title {
+  color: #0c1c18;
+  font-family: 'Poppins', sans-serif;
+}
+
+.about-light-theme p,
+.about-light-theme .section-desc {
+  color: #475569;
+}
+
+.highlight-green {
+  color: #039855;
+  font-weight: 700;
+}
+
+/* Vision & Mission Section */
+.vision-mission-section {
+  padding: 8rem 0 4rem 0;
+  position: relative;
+  z-index: 2;
+}
+
+.vision-mission-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+}
+
+.vision-mission-card {
+  background: #ffffff;
+  border: 1px solid rgba(3, 152, 85, 0.08);
+  border-radius: 24px;
+  padding: 3.5rem;
+  box-shadow: 0 15px 45px rgba(3, 22, 18, 0.02);
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s ease, box-shadow 0.4s ease;
+}
+
+.vision-mission-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 25px 55px rgba(3, 22, 18, 0.07);
+  border-color: rgba(3, 152, 85, 0.18);
+}
+
+.vm-icon {
+  width: 64px;
+  height: 64px;
+  background: rgba(3, 152, 85, 0.06);
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 2rem;
+  transition: background-color 0.3s ease;
+}
+
+.vision-mission-card:hover .vm-icon {
+  background: rgba(3, 152, 85, 0.12);
+}
+
+.vision-mission-card h3 {
+  font-size: 1.8rem;
+  font-weight: 600;
+  margin-bottom: 1.2rem;
+  color: #0c1c18;
+  font-family: 'Poppins', sans-serif;
+}
+
+.vision-mission-card p {
+  font-size: 1.05rem;
+  line-height: 1.75;
+  color: #475569;
+}
+
+/* By The Numbers Section */
+.numbers-section {
+  padding: 5rem 0;
+  position: relative;
+  z-index: 2;
+}
+
+.numbers-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2rem;
+}
+
+.stat-card {
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 3rem 2rem;
+  text-align: center;
+  box-shadow: 0 15px 40px rgba(3, 22, 18, 0.02);
+  border: 1px solid rgba(0, 0, 0, 0.03);
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s ease, box-shadow 0.4s ease;
+}
+
+.stat-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 25px 50px rgba(3, 22, 18, 0.06);
+  border-color: rgba(3, 152, 85, 0.12);
+}
+
+.stat-num {
+  font-size: 3rem;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 700;
+  color: #0c1c18;
+  line-height: 1.1;
+  margin-bottom: 0.8rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.2rem;
+}
+
+.stat-diamond {
+  color: #039855;
+  font-size: 1.5rem;
+  vertical-align: middle;
+}
+
+.stat-label {
+  font-size: 1rem;
+  color: #64748b;
+  font-weight: 500;
+}
+
+/* Our Expertise Section */
+.expertise-section {
+  padding: 6rem 0;
+  position: relative;
+  z-index: 2;
+}
+
+.expertise-grid {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 5rem;
+  align-items: center;
+}
+
+.expertise-left {
+  text-align: left;
+}
+
+.expertise-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  margin: 2.5rem 0;
+}
+
+.expertise-item {
+  padding-left: 1.8rem;
+  border-left: 3px solid #039855;
+}
+
+.expertise-item p {
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: #475569;
+}
+
+.expertise-right {
+  position: relative;
+}
+
+.expertise-image-wrap {
+  border-radius: 24px;
+  overflow: hidden;
+  /* box-shadow: 0 20px 50px rgba(3, 22, 18, 0.07); */
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
+}
+
+.expertise-image-wrap:hover {
+  transform: scale(1.02);
+  /* box-shadow: 0 25px 60px rgba(3, 22, 18, 0.12); */
+}
+
+.expertise-image-wrap img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Team Section */
+.team-section {
+  padding: 4rem 0;
+  position: relative;
+  z-index: 2;
+}
+
+.team-top-row {
+  display: grid;
+  grid-template-columns: 1.2fr 2fr;
+  gap: 4.5rem;
+  align-items: center;
+  margin-bottom: 5.5rem;
+}
+
+.team-header-left {
+  text-align: left;
+}
+
+.team-header-left .pill {
+  margin-bottom: 1.5rem;
+}
+
+.team-header-left .section-title {
+  margin-bottom: 1.5rem;
+  line-height: 1.2;
+}
+
+.team-header-left .section-desc {
+  max-width: 440px;
+  font-size: 1.05rem;
+  line-height: 1.6;
+}
+
+.team-leaders {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+}
+
+.team-bottom-grid {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 1.5rem;
+  width: 100%;
+  max-width: 100%;
+  padding: 0 4rem;
+  margin: 0 auto;
+}
+
+.team-card {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  border-radius: 0;
+  overflow: visible;
+  text-align: left;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.team-card:hover {
+  transform: translateY(-6px);
+}
+
+.team-img-wrap {
+  border-radius: 8px;
+  overflow: hidden;
+  background-color: #e2f5ec;
+}
+
+.team-img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  display: block;
+}
+
+.team-card:hover .team-img-wrap img {
+  transform: scale(1.05);
+}
+
+.team-info {
+  padding: 12px 0 0 0;
+}
+
+.team-info h3 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #0c1c18;
+  margin-bottom: 0.2rem;
+  font-family: 'Poppins', sans-serif;
+}
+
+.team-info h4 {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #0c1c18;
+  margin-bottom: 0.2rem;
+  font-family: 'Poppins', sans-serif;
+}
+
+.team-role {
+  font-size: 0.85rem;
+  color: #039855;
+  font-weight: 600;
+}
+
+/* Responsive Media Queries for About page */
+@media (max-width: 992px) {
+  .about-hero h1 {
+    font-size: 38px;
+    line-height: 48px;
+    margin-bottom: 2.5rem;
+  }
+
+  .about-gallery {
+    gap: 1rem;
+  }
+
+  .gallery-card {
+    min-width: 150px;
+  }
+
+  .vision-mission-grid {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+
+  .vision-mission-card {
+    padding: 2.5rem;
+  }
+
+  .numbers-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+
+  .expertise-grid {
+    grid-template-columns: 1fr;
+    gap: 3.5rem;
+  }
+
+  .team-top-row {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+
+  .team-bottom-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+    padding: 0 2rem;
+  }
+}
+
+@media (max-width: 1200px) {
+  .team-bottom-grid {
+    grid-template-columns: repeat(4, 1fr);
+    padding: 0 3rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .team-bottom-grid {
+    grid-template-columns: repeat(3, 1fr);
+    padding: 0 1.5rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .about-hero h1 {
+    font-size: 28px;
+    line-height: 38px;
+  }
+
+  .numbers-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .team-leaders {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .team-bottom-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    padding: 0 1rem;
   }
 }

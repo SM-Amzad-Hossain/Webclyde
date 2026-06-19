@@ -299,6 +299,191 @@ document.addEventListener('DOMContentLoaded', () => {
   setupInfiniteCarousel(rightContainer, rightTrack, 'right');
 
   // ==========================================
+  // About Gallery Step-by-step Carousel (Timed movement)
+  // ==========================================
+  const aboutContainer = document.querySelector('.about-carousel-container');
+  const aboutTrack = document.querySelector('.about-carousel-track');
+  
+  if (aboutContainer && aboutTrack) {
+    // Clone cards to create 5 sets (original + 4 clones)
+    const originalCards = Array.from(aboutTrack.children);
+    for (let i = 0; i < 4; i++) {
+      originalCards.forEach(card => {
+        const clone = card.cloneNode(true);
+        aboutTrack.appendChild(clone);
+      });
+    }
+
+    const cardWidth = 240; // width of card
+    const gap = 16; // 1rem gap
+    const step = cardWidth + gap;
+    const singleSetWidth = originalCards.length * step;
+
+    // Calculate and update which card is currently active (centered in the viewport)
+    const updateActiveCard = () => {
+      const containerCenter = aboutContainer.scrollLeft + aboutContainer.clientWidth / 2;
+      const cards = Array.from(aboutTrack.children);
+      
+      let closestCard = null;
+      let minDistance = Infinity;
+      
+      cards.forEach((card, index) => {
+        const cardCenter = (index * step) + (cardWidth / 2);
+        const distance = Math.abs(cardCenter - containerCenter);
+        if (distance < minDistance) {
+          minDistance = distance;
+          closestCard = card;
+        }
+      });
+      
+      if (closestCard) {
+        cards.forEach(c => c.classList.remove('active-slide'));
+        closestCard.classList.add('active-slide');
+        
+        // Find if this card is even or odd based on its class
+        const isEven = closestCard.classList.contains('even');
+        
+        if (isEven) {
+          aboutContainer.classList.add('even-active');
+          aboutContainer.classList.remove('odd-active');
+        } else {
+          aboutContainer.classList.add('odd-active');
+          aboutContainer.classList.remove('even-active');
+        }
+      }
+    };
+
+    // Set scroll position to the start of the third set (middle)
+    const initScroll = () => {
+      aboutContainer.scrollLeft = singleSetWidth * 2;
+      updateActiveCard();
+    };
+    window.addEventListener('load', initScroll);
+    setTimeout(initScroll, 100);
+
+    let isDown = false;
+    let isPaused = false;
+    let lastX;
+    let startScrollLeft;
+    let animationFrameId = null;
+    let isAnimating = false;
+
+    // Custom smooth scroll function
+    const smoothScrollTo = (targetLeft, duration, callback) => {
+      isAnimating = true;
+      const startLeft = aboutContainer.scrollLeft;
+      const change = targetLeft - startLeft;
+      const startTime = performance.now();
+      
+      const animate = (currentTime) => {
+        const elapsed = currentTime - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        
+        // Easing: easeOutQuad
+        const ease = progress * (2 - progress);
+        aboutContainer.scrollLeft = startLeft + change * ease;
+        
+        if (progress < 1) {
+          animationFrameId = requestAnimationFrame(animate);
+        } else {
+          isAnimating = false;
+          if (callback) callback();
+        }
+      };
+      
+      if (animationFrameId) cancelAnimationFrame(animationFrameId);
+      animationFrameId = requestAnimationFrame(animate);
+    };
+
+    const snapToNearest = () => {
+      const currentScroll = aboutContainer.scrollLeft;
+      const nearestIndex = Math.round(currentScroll / step);
+      const targetScroll = nearestIndex * step;
+      
+      smoothScrollTo(targetScroll, 300, () => {
+        warpCheck();
+      });
+    };
+
+    const warpCheck = () => {
+      if (aboutContainer.scrollLeft >= singleSetWidth * 3) {
+        aboutContainer.scrollLeft -= singleSetWidth;
+      } else if (aboutContainer.scrollLeft <= singleSetWidth) {
+        aboutContainer.scrollLeft += singleSetWidth;
+      }
+      updateActiveCard();
+    };
+
+    // Mouse Drag/Touch Swipe
+    aboutContainer.addEventListener('mousedown', (e) => {
+      isDown = true;
+      if (animationFrameId) cancelAnimationFrame(animationFrameId);
+      lastX = e.pageX;
+      startScrollLeft = aboutContainer.scrollLeft;
+      aboutContainer.classList.add('active');
+    });
+
+    aboutContainer.addEventListener('mousemove', (e) => {
+      if (!isDown) return;
+      const deltaX = e.pageX - lastX;
+      aboutContainer.scrollLeft = startScrollLeft - deltaX;
+    });
+
+    const handleRelease = () => {
+      if (!isDown) return;
+      isDown = false;
+      aboutContainer.classList.remove('active');
+      snapToNearest();
+    };
+
+    aboutContainer.addEventListener('mouseup', handleRelease);
+    aboutContainer.addEventListener('mouseleave', handleRelease);
+
+    aboutContainer.addEventListener('touchstart', (e) => {
+      isDown = true;
+      if (animationFrameId) cancelAnimationFrame(animationFrameId);
+      lastX = e.touches[0].pageX;
+      startScrollLeft = aboutContainer.scrollLeft;
+    });
+
+    aboutContainer.addEventListener('touchend', handleRelease);
+
+    aboutContainer.addEventListener('touchmove', (e) => {
+      if (!isDown) return;
+      const deltaX = e.touches[0].pageX - lastX;
+      aboutContainer.scrollLeft = startScrollLeft - deltaX;
+    });
+
+    // Hover Pause
+    aboutContainer.addEventListener('mouseenter', () => { isPaused = true; });
+    aboutContainer.addEventListener('mouseleave', () => { isPaused = false; });
+
+    // Step auto-slide
+    const stepSlide = () => {
+      if (!isDown && !isPaused) {
+        const targetScroll = aboutContainer.scrollLeft + step;
+        smoothScrollTo(targetScroll, 600, () => {
+          warpCheck();
+        });
+      }
+    };
+
+    let slideInterval = setInterval(stepSlide, 3000); // Step every 3 seconds
+
+    // Track active card and warp during scroll events (e.g. manual drag/swipe)
+    aboutContainer.addEventListener('scroll', () => {
+      updateActiveCard();
+      if (!isAnimating) {
+        if (aboutContainer.scrollLeft >= singleSetWidth * 3) {
+          aboutContainer.scrollLeft -= singleSetWidth;
+        } else if (aboutContainer.scrollLeft <= singleSetWidth) {
+          aboutContainer.scrollLeft += singleSetWidth;
+        }
+      }
+    });
+  }
+
+  // ==========================================
   // 7. HERO MOCKUPS PARALLAX SCROLL EFFECT (SMOOTH LERP)
   // ==========================================
   const mockupLeft = document.querySelector('.hero-mockup-left');
