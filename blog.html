@@ -13,6 +13,9 @@
   <link rel="stylesheet" href="components/header.css">
   <link rel="stylesheet" href="components/footer.css">
   <link rel="icon" type="image/png" href="Asset/logos/fav_icon webclyde.png">
+
+  <!-- Blog Posts Data -->
+  <script src="blog-data.js"></script>
 </head>
 
 <body>
@@ -35,13 +38,6 @@
 
         <!-- Categories & Search filter row -->
         <div class="categories-filter-row">
-          <button class="filter-btn active" data-filter="all">All</button>
-          <button class="filter-btn" data-filter="business-development">Business Development</button>
-          <button class="filter-btn" data-filter="culture">Culture</button>
-          <button class="filter-btn" data-filter="interviews">Interviews</button>
-          <button class="filter-btn" data-filter="personal-development">Personal Development</button>
-          <button class="filter-btn" data-filter="tech">Tech</button>
-           <button class="filter-btn" data-filter="ai">AI</button>
           <div class="filter-search-wrap">
             <input type="text" class="filter-search-input" placeholder="Search blogs...">
             <button class="filter-search-btn" aria-label="Search">
@@ -71,124 +67,14 @@
         </div>
 
         <!-- Blog Cards Grid -->
-        <div class="blog-grid">
-          <!-- Card 1 -->
-          <article class="blog-card" data-category="business-development">
-            <div class="blog-card-image-wrap">
-              <a href="single-blog.html?id=wordpress-staging">
-                <img src="Asset/images/wordpress_staging_featured.png" alt="WordPress Staging Site illustration">
-              </a>
-            </div>
-            <div class="blog-card-content">
-              <div class="blog-card-badge">Business Development</div>
-              <h3><a href="single-blog.html?id=wordpress-staging">How to Create a WordPress Staging Site (3 Different Ways)</a></h3>
-              <p>Learn how to create a WordPress staging site safely using three different methods: hoster tools, staging plugins, and manual setups.</p>
-              <div class="blog-card-footer">
-                <span class="blog-card-date">Date: October 24, 2026</span>
-              </div>
-            </div>
-          </article>
-
-          <!-- Card 2 -->
-          <article class="blog-card" data-category="tech">
-            <div class="blog-card-image-wrap">
-              <a href="single-blog.html?id=project-manager-revamp">
-                <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&auto=format&fit=crop&q=80" alt="Dashboard metrics user interface screenshot">
-              </a>
-            </div>
-            <div class="blog-card-content">
-              <div class="blog-card-badge">Tech</div>
-              <h3><a href="single-blog.html?id=project-manager-revamp">WP Project Manager Revamp: Same Plugin, Brand New UI & Experience</a></h3>
-              <p>We are thrilled to announce the brand new user interface and user experience revamp of the WP Project Manager plugin.</p>
-              <div class="blog-card-footer">
-                <span class="blog-card-date">Date: October 24, 2026</span>
-              </div>
-            </div>
-          </article>
-
-          <!-- Card 3 -->
-          <article class="blog-card" data-category="ai">
-            <div class="blog-card-image-wrap">
-              <a href="single-blog.html?id=frontend-user-profile">
-                <img src="https://images.unsplash.com/photo-1531403009284-440f080d1e12?w=600&auto=format&fit=crop&q=80" alt="Design UI layout user profile mockup">
-              </a>
-            </div>
-            <div class="blog-card-content">
-              <div class="blog-card-badge">AI</div>
-              <h3><a href="single-blog.html?id=frontend-user-profile">How to Build a Frontend User Profile in WordPress (Complete Guide)</a></h3>
-              <p>Building a custom user profile on the frontend of WordPress can improve your website's community engagement.</p>
-              <div class="blog-card-footer">
-                <span class="blog-card-date">Date: October 24, 2026</span>
-              </div>
-            </div>
-          </article>
-
-          <!-- Card 4 -->
-          <article class="blog-card" data-category="business-development">
-            <div class="blog-card-image-wrap">
-              <a href="single-blog.html?id=business-mobile-app">
-                <img src="https://images.unsplash.com/photo-1618401471353-b98aedd07871?w=600&auto=format&fit=crop&q=80" alt="WordPress Staging Site illustration duplicate">
-              </a>
-            </div>
-            <div class="blog-card-content">
-              <div class="blog-card-badge">Business Development</div>
-              <h3><a href="single-blog.html?id=business-mobile-app">Why Your Business Needs a Mobile App in 2025: A Must-Have for Modern</a></h3>
-              <p>Mobile applications have transitioned from optional luxuries to critical business necessities in 2025.</p>
-              <div class="blog-card-footer">
-                <span class="blog-card-date">Date: October 24, 2026</span>
-              </div>
-            </div>
-          </article>
-
-          <!-- Card 5 -->
-          <article class="blog-card" data-category="tech">
-            <div class="blog-card-image-wrap">
-              <a href="single-blog.html?id=wordpress-speed-optimization">
-                <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&auto=format&fit=crop&q=80" alt="Dashboard metrics user interface screenshot duplicate">
-              </a>
-            </div>
-            <div class="blog-card-content">
-              <div class="blog-card-badge">Tech</div>
-              <h3><a href="single-blog.html?id=wordpress-speed-optimization">The Complete Guide to WordPress Speed & Performance Optimization</a></h3>
-              <p>Discover how to optimize your WordPress site load speed, configure caching, scale images, and score 100% on PageSpeed.</p>
-              <div class="blog-card-footer">
-                <span class="blog-card-date">Date: October 24, 2026</span>
-              </div>
-            </div>
-          </article>
-
-          <!-- Card 6 -->
-          <article class="blog-card" data-category="ai">
-            <div class="blog-card-image-wrap">
-              <a href="single-blog.html?id=ai-chatbots-ecommerce">
-                <img src="https://images.unsplash.com/photo-1531403009284-440f080d1e12?w=600&auto=format&fit=crop&q=80" alt="Design UI layout user profile mockup duplicate">
-              </a>
-            </div>
-            <div class="blog-card-content">
-              <div class="blog-card-badge">AI</div>
-              <h3><a href="single-blog.html?id=ai-chatbots-ecommerce">How to Integrate AI-Powered Chatbots in WordPress E-Commerce Sites</a></h3>
-              <p>Learn how integrating artificial intelligence customer support widgets can maximize e-commerce checkout completion rates.</p>
-              <div class="blog-card-footer">
-                <span class="blog-card-date">Date: October 24, 2026</span>
-              </div>
-            </div>
-          </article>
+        <div class="blog-grid" id="blog-posts-grid">
+          <!-- Dynamically populated from JS -->
         </div>
 
         <!-- ==========================================
              PAGINATION BAR
              ========================================== -->
-        <div class="pagination" style="margin-top: 5rem;">
-          <a href="#" class="page-arrow prev-page">&lt;</a>
-          <a href="#" class="page-num active">1</a>
-          <a href="#" class="page-num">2</a>
-          <a href="#" class="page-num">3</a>
-          <a href="#" class="page-num">4</a>
-          <a href="#" class="page-num">5</a>
-          <span class="page-ellipsis">...</span>
-          <a href="#" class="page-num">12</a>
-          <a href="#" class="page-arrow next-page">&gt;</a>
-        </div>
+        <div class="pagination" id="blog-pagination" style="margin-top: 5rem;"></div>
       </div>
     </div>
 
@@ -199,6 +85,218 @@
   </main>
 
   <div id="footer-placeholder"></div>
+
+  <!-- Render Blog Posts Dynamically -->
+  <script>
+    // Set flag for app.js to use paginated logic
+    window.usePagination = true;
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const posts = window.blogPosts || [];
+      const grid = document.getElementById('blog-posts-grid');
+      const filterRow = document.querySelector('.categories-filter-row');
+      const searchWrap = document.querySelector('.filter-search-wrap');
+
+      // State Management
+      let currentPage = 1;
+      const postsPerPage = 12;
+      let activeCategory = 'all';
+      let searchQuery = '';
+
+      const generateSlug = (text) => {
+        return text
+          .toString()
+          .toLowerCase()
+          .replace(/\s+/g, '-')
+          .replace(/[^\w\-]+/g, '')
+          .replace(/\-\-+/g, '-')
+          .replace(/^-+/, '')
+          .replace(/-+$/, '');
+      };
+
+      // 1. Populate category filter buttons dynamically on load
+      if (filterRow && searchWrap) {
+        const categories = [];
+        const seen = new Set();
+
+        // 1a. Default categories
+        const defaultCats = ["Business Development", "Tech", "AI"];
+        defaultCats.forEach(cat => {
+          const slug = generateSlug(cat);
+          if (!seen.has(slug)) {
+            seen.add(slug);
+            categories.push({ name: cat, slug: slug });
+          }
+        });
+
+        // 1b. Custom categories from localStorage
+        const customCategories = JSON.parse(localStorage.getItem('webclyde_custom_categories')) || [];
+        customCategories.forEach(cat => {
+          if (cat && cat.trim() !== "") {
+            const slug = generateSlug(cat);
+            if (!seen.has(slug)) {
+              seen.add(slug);
+              categories.push({ name: cat, slug: slug });
+            }
+          }
+        });
+
+        // 1c. Categories from active posts
+        posts.forEach(post => {
+          if (post.category) {
+            const slug = post.categorySlug || generateSlug(post.category);
+            if (!seen.has(slug)) {
+              seen.add(slug);
+              categories.push({ name: post.category, slug: slug });
+            }
+          }
+        });
+
+        let buttonsHtml = `<button class="filter-btn active" data-filter="all">All</button>`;
+        categories.forEach(cat => {
+          buttonsHtml += `<button class="filter-btn" data-filter="${cat.slug}">${cat.name}</button>`;
+        });
+
+        filterRow.insertAdjacentHTML('afterbegin', buttonsHtml);
+      }
+
+      // 2. Render paginated and filtered posts
+      function displayPosts() {
+        if (!grid) return;
+
+        // Apply filters
+        const filteredPosts = posts.filter(post => {
+          const catSlug = post.categorySlug || generateSlug(post.category);
+          const matchesCategory = (activeCategory === 'all' || catSlug === activeCategory);
+          const matchesSearch = (searchQuery === '' || 
+                                 post.title.toLowerCase().includes(searchQuery) || 
+                                 post.excerpt.toLowerCase().includes(searchQuery));
+          return matchesCategory && matchesSearch;
+        });
+
+        const totalPosts = filteredPosts.length;
+        const totalPages = Math.ceil(totalPosts / postsPerPage);
+
+        // Clamping currentPage
+        if (currentPage > totalPages) currentPage = Math.max(1, totalPages);
+        if (currentPage < 1) currentPage = 1;
+
+        const startIndex = (currentPage - 1) * postsPerPage;
+        const endIndex = startIndex + postsPerPage;
+        const paginatedPosts = filteredPosts.slice(startIndex, endIndex);
+
+        if (paginatedPosts.length === 0) {
+          grid.innerHTML = `
+            <div style="grid-column: 1 / -1; text-align: center; padding: 4rem 2rem; color: #94a3b8; font-family: var(--font-heading); font-size: 1.2rem;">
+              🔍 No posts found matching the active search or category filters.
+            </div>
+          `;
+          renderPagination(0, 1);
+          return;
+        }
+
+        grid.innerHTML = paginatedPosts.map(post => `
+          <article class="blog-card" data-category="${post.categorySlug || generateSlug(post.category)}" style="display: flex; opacity: 1; transform: scale(1);">
+            <div class="blog-card-image-wrap">
+              <a href="single-blog.html?id=${post.id}">
+                <img src="${post.image}" alt="${post.title}">
+              </a>
+            </div>
+            <div class="blog-card-content">
+              <div class="blog-card-badge">${post.category}</div>
+              <h3><a href="single-blog.html?id=${post.id}">${post.title}</a></h3>
+              <p>${post.excerpt}</p>
+              <div class="blog-card-footer">
+                <span class="blog-card-date">Date: ${post.date}</span>
+              </div>
+            </div>
+          </article>
+        `).join('');
+
+        renderPagination(totalPages, currentPage);
+      }
+
+      // 3. Render dynamic pagination buttons
+      function renderPagination(totalPages, currentPage) {
+        const pagination = document.getElementById('blog-pagination');
+        if (!pagination) return;
+
+        if (totalPages <= 1) {
+          pagination.innerHTML = '';
+          return;
+        }
+
+        let html = '';
+
+        // Previous button
+        if (currentPage > 1) {
+          html += `<a href="#" class="page-arrow prev-page" onclick="changePage(event, ${currentPage - 1})">&lt;</a>`;
+        } else {
+          html += `<a href="#" class="page-arrow prev-page disabled" onclick="event.preventDefault()" style="opacity: 0.4; pointer-events: none;">&lt;</a>`;
+        }
+
+        // Page numbers
+        const delta = 1; // page offset range
+        const range = [];
+        for (let i = 1; i <= totalPages; i++) {
+          if (i === 1 || i === totalPages || (i >= currentPage - delta && i <= currentPage + delta)) {
+            range.push(i);
+          }
+        }
+
+        let last = 0;
+        for (const page of range) {
+          if (last) {
+            if (page - last === 2) {
+              html += `<a href="#" class="page-num" onclick="changePage(event, ${last + 1})">${last + 1}</a>`;
+            } else if (page - last > 2) {
+              html += `<span class="page-ellipsis">...</span>`;
+            }
+          }
+          const activeClass = page === currentPage ? 'active' : '';
+          html += `<a href="#" class="page-num ${activeClass}" onclick="changePage(event, ${page})">${page}</a>`;
+          last = page;
+        }
+
+        // Next button
+        if (currentPage < totalPages) {
+          html += `<a href="#" class="page-arrow next-page" onclick="changePage(event, ${currentPage + 1})">&gt;</a>`;
+        } else {
+          html += `<a href="#" class="page-arrow next-page disabled" onclick="event.preventDefault()" style="opacity: 0.4; pointer-events: none;">&gt;</a>`;
+        }
+
+        pagination.innerHTML = html;
+      }
+
+      // Exposed global handlers for app.js integration
+      window.handleCategoryFilter = function(catSlug) {
+        activeCategory = catSlug;
+        currentPage = 1;
+        displayPosts();
+      };
+
+      window.handleSearchChange = function(query) {
+        searchQuery = query.toLowerCase();
+        currentPage = 1;
+        displayPosts();
+      };
+
+      window.changePage = function(e, page) {
+        e.preventDefault();
+        currentPage = page;
+        displayPosts();
+        
+        // Smooth scroll to top of blog list grid
+        const gridHeader = document.querySelector('.blog-grid-header');
+        if (gridHeader) {
+          gridHeader.scrollIntoView({ behavior: 'smooth' });
+        }
+      };
+
+      // Initial rendering
+      displayPosts();
+    });
+  </script>
 
   <!-- JS Scripts -->
   <script src="components/components-loader.js"></script>

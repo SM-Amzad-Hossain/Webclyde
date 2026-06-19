@@ -547,7 +547,73 @@ document.addEventListener('DOMContentLoaded', () => {
   const searchInput = document.querySelector('.filter-search-input');
   const searchBtn = document.querySelector('.filter-search-btn');
 
-  if (blogCards.length > 0) {
+  if (window.usePagination) {
+    // 1. Category click listener for pagination
+    if (filterButtons.length > 0) {
+      filterButtons.forEach(button => {
+        button.addEventListener('click', () => {
+          filterButtons.forEach(btn => btn.classList.remove('active'));
+          button.classList.add('active');
+          const activeCategory = button.getAttribute('data-filter');
+          if (typeof window.handleCategoryFilter === 'function') {
+            window.handleCategoryFilter(activeCategory);
+          }
+        });
+      });
+    }
+
+    // 2. Search Toggle and Input listeners for pagination
+    if (searchWrap && searchBtn && searchInput) {
+      searchBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const isCurrentlyActive = searchWrap.classList.contains('active');
+        
+        if (!isCurrentlyActive) {
+          searchWrap.classList.add('active');
+          searchInput.focus();
+        } else if (searchInput.value.trim() === '') {
+          searchWrap.classList.remove('active');
+          if (typeof window.handleSearchChange === 'function') {
+            window.handleSearchChange('');
+          }
+        } else {
+          const searchQuery = searchInput.value.trim().toLowerCase();
+          if (typeof window.handleSearchChange === 'function') {
+            window.handleSearchChange(searchQuery);
+          }
+          searchInput.blur();
+        }
+      });
+
+      document.addEventListener('click', (e) => {
+        if (!searchWrap.contains(e.target) && searchInput.value.trim() === '') {
+          searchWrap.classList.remove('active');
+        }
+      });
+
+      searchInput.addEventListener('input', () => {
+        const searchQuery = searchInput.value.trim().toLowerCase();
+        if (typeof window.handleSearchChange === 'function') {
+          window.handleSearchChange(searchQuery);
+        }
+      });
+
+      searchInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          const searchQuery = searchInput.value.trim().toLowerCase();
+          if (typeof window.handleSearchChange === 'function') {
+            window.handleSearchChange(searchQuery);
+          }
+          searchInput.blur();
+        }
+      });
+
+      searchInput.addEventListener('click', (e) => {
+        e.stopPropagation();
+      });
+    }
+  } else if (blogCards.length > 0) {
     let activeCategory = 'all';
     let searchQuery = '';
 

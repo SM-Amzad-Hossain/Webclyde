@@ -1,4 +1,4 @@
-window.blogPosts = [
+const defaultBlogPosts = [
   {
     id: "wordpress-staging",
     category: "Business Development",
@@ -131,3 +131,37 @@ window.blogPosts = [
     `
   }
 ];
+
+// Seed to localStorage if not exists
+const STORAGE_KEY = 'webclyde_blog_posts';
+if (!localStorage.getItem(STORAGE_KEY)) {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(defaultBlogPosts));
+}
+
+// Populate window.blogPosts
+window.blogPosts = JSON.parse(localStorage.getItem(STORAGE_KEY));
+
+// Helper Functions
+window.saveBlogPost = function(post) {
+  const currentPosts = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+  const index = currentPosts.findIndex(p => p.id === post.id);
+  if (index !== -1) {
+    currentPosts[index] = post;
+  } else {
+    currentPosts.unshift(post);
+  }
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(currentPosts));
+  window.blogPosts = currentPosts;
+};
+
+window.deleteBlogPost = function(postId) {
+  let currentPosts = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+  currentPosts = currentPosts.filter(p => p.id !== postId);
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(currentPosts));
+  window.blogPosts = currentPosts;
+};
+
+window.resetBlogPosts = function() {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(defaultBlogPosts));
+  window.blogPosts = defaultBlogPosts;
+};
