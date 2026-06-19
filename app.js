@@ -537,4 +537,118 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     }
   });
+
+  // ==========================================
+  // 9. BLOG CATEGORIES & SEARCH FILTER
+  // ==========================================
+  const filterButtons = document.querySelectorAll('.categories-filter-row .filter-btn');
+  const blogCards = document.querySelectorAll('.blog-grid .blog-card');
+  const searchWrap = document.querySelector('.filter-search-wrap');
+  const searchInput = document.querySelector('.filter-search-input');
+  const searchBtn = document.querySelector('.filter-search-btn');
+
+  if (blogCards.length > 0) {
+    let activeCategory = 'all';
+    let searchQuery = '';
+
+    // Function to apply both filters
+    const applyFilters = () => {
+      blogCards.forEach(card => {
+        const cardCategory = card.getAttribute('data-category');
+        const cardTitle = card.querySelector('h3').textContent.toLowerCase();
+        const cardDesc = card.querySelector('p').textContent.toLowerCase();
+
+        const matchesCategory = (activeCategory === 'all' || cardCategory === activeCategory);
+        const matchesSearch = (searchQuery === '' || cardTitle.includes(searchQuery) || cardDesc.includes(searchQuery));
+
+        if (matchesCategory && matchesSearch) {
+          // Fade in
+          if (card.style.display !== 'flex') {
+            card.style.display = 'flex';
+            card.style.opacity = '0';
+            card.style.transform = 'scale(0.95)';
+            card.offsetHeight; // force reflow
+          }
+          card.style.transition = 'opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), transform 0.4s cubic-bezier(0.16, 1, 0.3, 1)';
+          card.style.opacity = '1';
+          card.style.transform = 'scale(1)';
+        } else {
+          // Fade out
+          card.style.transition = 'opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1), transform 0.3s cubic-bezier(0.16, 1, 0.3, 1)';
+          card.style.opacity = '0';
+          card.style.transform = 'scale(0.95)';
+          
+          const onTransitionEnd = () => {
+            if (card.style.opacity === '0') {
+              card.style.display = 'none';
+            }
+            card.removeEventListener('transitionend', onTransitionEnd);
+          };
+          card.addEventListener('transitionend', onTransitionEnd);
+        }
+      });
+    };
+
+    // Category button click listener
+    if (filterButtons.length > 0) {
+      filterButtons.forEach(button => {
+        button.addEventListener('click', () => {
+          filterButtons.forEach(btn => btn.classList.remove('active'));
+          button.classList.add('active');
+          activeCategory = button.getAttribute('data-filter');
+          applyFilters();
+        });
+      });
+    }
+
+    // Search Toggle listener
+    if (searchWrap && searchBtn && searchInput) {
+      searchBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const isCurrentlyActive = searchWrap.classList.contains('active');
+        
+        if (!isCurrentlyActive) {
+          searchWrap.classList.add('active');
+          searchInput.focus();
+        } else if (searchInput.value.trim() === '') {
+          searchWrap.classList.remove('active');
+          searchQuery = '';
+          applyFilters();
+        } else {
+          // If search button is clicked with text, perform search and blur
+          searchQuery = searchInput.value.trim().toLowerCase();
+          applyFilters();
+          searchInput.blur();
+        }
+      });
+
+      // Close search input if clicked outside
+      document.addEventListener('click', (e) => {
+        if (!searchWrap.contains(e.target) && searchInput.value.trim() === '') {
+          searchWrap.classList.remove('active');
+        }
+      });
+
+      // Search typing input listener
+      searchInput.addEventListener('input', () => {
+        searchQuery = searchInput.value.trim().toLowerCase();
+        applyFilters();
+      });
+
+      // Search Enter key listener
+      searchInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          searchQuery = searchInput.value.trim().toLowerCase();
+          applyFilters();
+          searchInput.blur();
+        }
+      });
+
+      // Prevent closing when clicking input
+      searchInput.addEventListener('click', (e) => {
+        e.stopPropagation();
+      });
+    }
+  }
 });
