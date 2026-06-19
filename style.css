@@ -2858,3 +2858,186 @@ h2,
     height: 80px;
   }
 }
+
+/* ==========================================
+   20. REVIEWS PAGE STYLES
+   ========================================== */
+
+/* Reviews Hero */
+.reviews-hero {
+  padding: 12rem 0 6rem 0;
+  text-align: center;
+  background: radial-gradient(circle at 50% 30%, rgba(0, 194, 133, 0.08) 0%, transparent 70%),
+    url('Asset/images/Inner%20page%20Hero%20Banner.jpg') no-repeat center/cover;
+  position: relative;
+  overflow: hidden;
+}
+
+.reviews-hero h1 {
+  font-family: 'Poppins', sans-serif;
+  font-size: 50px;
+  font-weight: 400;
+  line-height: 60px;
+  letter-spacing: -0.01em;
+  margin-bottom: 3.5rem;
+}
+
+.reviews-light-theme {
+  background-color: #ffffff;
+  color: #475569;
+  position: relative;
+  z-index: 10;
+  overflow: hidden;
+}
+
+/* Glow Blobs for Reviews Light Theme */
+.reviews-light-glow {
+  position: absolute;
+  width: 600px;
+  height: 600px;
+  border-radius: 50%;
+  filter: blur(140px);
+  opacity: 0.3;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.reviews-light-glow-1 {
+  background: radial-gradient(circle, rgba(0, 194, 133, 0.18) 0%, transparent 70%);
+  top: 5%;
+  left: -10%;
+}
+
+.reviews-light-glow-2 {
+  background: radial-gradient(circle, rgba(255, 209, 59, 0.15) 0%, transparent 70%);
+  top: 35%;
+  right: -10%;
+}
+
+.reviews-light-glow-3 {
+  background: radial-gradient(circle, rgba(0, 194, 133, 0.12) 0%, transparent 70%);
+  bottom: 5%;
+  left: 20%;
+}
+
+/* Reviews Grid/Masonry Layout */
+.reviews-columns-grid {
+  column-count: 3;
+  column-gap: 2rem;
+  width: 100%;
+}
+
+.reviews-columns-grid .testimonial-card {
+  width: 100% !important;
+  margin-bottom: 2rem;
+  break-inside: avoid;
+  display: inline-flex;
+  flex-direction: column;
+  border: none !important;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.04);
+}
+
+.reviews-columns-grid .testimonial-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  padding: 1px;
+  border-radius: var(--border-radius-md);
+  background: linear-gradient(90deg, #ADAF31 0%, #03B080 53%, #B0F7B0 100%);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+/* Pagination Styling */
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 4rem;
+  position: relative;
+  z-index: 5;
+}
+
+.page-num, .page-arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  text-decoration: none;
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: #64748b;
+  transition: all 0.3s ease;
+}
+
+.page-num.active {
+  background-color: #0ea5e9;
+  color: #ffffff;
+  box-shadow: 0 4px 12px rgba(14, 165, 233, 0.2);
+}
+
+.page-num:not(.active):hover, .page-arrow:hover {
+  background-color: rgba(3, 176, 128, 0.08);
+  color: #03B080;
+}
+
+.page-ellipsis {
+  color: #64748b;
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 0.95rem;
+  width: 40px;
+  display: flex;
+  justify-content: center;
+}
+
+/* Responsive Media Queries for Reviews */
+@media (max-width: 992px) {
+  .reviews-columns-grid {
+    column-count: 2;
+    column-gap: 1.5rem;
+  }
+  
+  .reviews-columns-grid .testimonial-card {
+    margin-bottom: 1.5rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .reviews-hero h1 {
+    font-size: 28px;
+    line-height: 38px;
+  }
+}
+
+@media (max-width: 576px) {
+  .reviews-columns-grid {
+    column-count: 1;
+    column-gap: 0;
+  }
+  
+  .reviews-columns-grid .testimonial-card {
+    margin-bottom: 1.2rem;
+  }
+  
+  .pagination {
+    gap: 0.25rem;
+  }
+  
+  .page-num, .page-arrow {
+    width: 32px;
+    height: 32px;
+    font-size: 0.85rem;
+  }
+  
+  .page-ellipsis {
+    width: 24px;
+  }
+}
